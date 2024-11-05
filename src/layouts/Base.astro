@@ -1,0 +1,123 @@
+---
+import ViewTransitions from "astro/components/ViewTransitions.astro";
+import { IconSun } from "@tabler/icons-react";
+import { IconMoon } from "@tabler/icons-react";
+
+const { title, desc } = Astro.props;
+const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
+---
+
+<html lang="es" about="acha">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title ?? "Achalogy"}</title>
+    <meta
+      name="description"
+      content={desc ??
+        ""}
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico?v=16" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Añadir Hack Font -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/hack-font/3.3.0/web/hack.min.css"
+      integrity="sha512-XgCw4Srl8lC1ECwcaHwAU0WnxQwHkqmInzg9wJLtGB7DRuMaXPuK2k9WJ2AwRDGdrgK9eJpZl2hUlLi2WQssmw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    /> -->
+
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <ViewTransitions />
+  <body>
+    <main class={themeCookie}>
+      <div
+        class={`flex flex-col min-h-screen bg-white dark:bg-slate-900 dark:text-white`}
+      >
+        <script is:inline>
+          function changeTheme() {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; theme=`);
+            const theme = parts.pop().split(";").shift();
+            const nTheme = theme == "dark" ? "light" : "dark";
+            document.cookie = `theme=${nTheme}; expires=${new Date(Date.now() + 10e9).toUTCString()}; path=/`;
+            window.location.reload();
+          }
+        </script>
+        <div
+          class="select-none p-4 flex justify-between px-[5%] bg-gradient-to-r dark:from-slate-800 dark:to-slate-800 from-purple-500 to-indigo-600 text-white"
+        >
+          <a class="font-semibold" href="/"
+            >Achalogy</a
+          >
+          <p onclick="changeTheme()" class="cursor-pointer">
+            {themeCookie == "dark" ? <IconSun /> : <IconMoon />}
+          </p>
+        </div>
+        <slot />
+      </div>
+
+      <style is:global>
+        /* Hide scrollbar for Chrome, Safari and Opera */
+        *::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Hide scrollbar for IE, Edge and Firefox */
+        * {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+          /* font-family: "hack"; */
+        }
+
+        body {
+          background-color: white;
+        }
+
+        input {
+          @apply rounded-md outline-none px-3 p-2;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        th,
+        td {
+          @apply border border-black dark:border-white p-1;
+        }
+
+        blockquote {
+          @apply bg-slate-100 dark:bg-slate-800 border-l-4 border-l-red-500 p-2 rounded-md;
+        }
+
+        pre {
+          @apply p-2 rounded-md;
+        }
+
+        code:not(pre code) {
+          @apply px-2 rounded-md border border-slate-300 dark:border-slate-500;
+        }
+
+        .markdown a {
+          @apply text-sky-500 underline underline-offset-4 cursor-pointer;
+        }
+
+        ol {
+          @apply list-decimal list-outside mb-2;
+        }
+
+        .katex-html {
+          @apply hidden;
+        }
+      </style>
+    </main>
+  </body>
+</html>
