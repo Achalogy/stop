@@ -11,7 +11,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title ?? "Achalogy"}</title>
+    <title>{title ?? "Stop Acha"}</title>
     <meta
       name="description"
       content={desc ??
@@ -38,7 +38,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
   <body>
     <main class={themeCookie}>
       <div
-        class={`flex flex-col min-h-screen bg-white dark:bg-slate-900 dark:text-white`}
+        class={`flex flex-col min-h-screen h-screen bg-white dark:bg-slate-900 dark:text-white`}
       >
         <script is:inline>
           function changeTheme() {
@@ -50,16 +50,6 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
             window.location.reload();
           }
         </script>
-        <div
-          class="select-none p-4 flex justify-between px-[5%] bg-gradient-to-r dark:from-slate-800 dark:to-slate-800 from-purple-500 to-indigo-600 text-white"
-        >
-          <a class="font-semibold" href="/"
-            >Achalogy</a
-          >
-          <p onclick="changeTheme()" class="cursor-pointer">
-            {themeCookie == "dark" ? <IconSun /> : <IconMoon />}
-          </p>
-        </div>
         <slot />
       </div>
 
@@ -81,7 +71,7 @@ const themeCookie = Astro.cookies.get("theme")?.value ?? "light";
         }
 
         input {
-          @apply rounded-md outline-none px-3 p-2;
+          @apply outline-slate-100 p-1 px-2 m-0 w-full;
         }
 
         input[type="number"]::-webkit-inner-spin-button,
